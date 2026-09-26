@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自定义元素生命周期实验室</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>自定义元素生命周期实验室</h1>
+  <p class="sub">Custom Elements + Shadow DOM + MutationObserver + BroadcastChannel + IndexedDB</p>
+</header>
+
+<div id="fallback-banner" hidden>
+  ⚠ 当前浏览器不支持 Custom Elements，已启用降级模式：演示将以普通元素进行，生命周期回调不会触发。
+</div>
+
+<main>
+  <section class="panel" id="controls">
+    <h2>演示操作</h2>
+    <div class="btn-grid">
+      <button id="btn-create" class="needs-ce">① 创建并挂载 lc-box<br><small>constructor → attrChanged → connected</small></button>
+      <button id="btn-innerhtml" class="needs-ce">② innerHTML 批量挂载<br><small>观察解析期升级顺序</small></button>
+      <button id="btn-counter" class="needs-ce">③ 挂载 lc-counter<br><small>Shadow DOM 封装元素</small></button>
+      <button id="btn-disconnect" class="needs-ce">④ 断开 / 重连<br><small>disconnected → connected</small></button>
+      <button id="btn-attr" class="needs-ce">⑤ 属性反射<br><small>property ↔ attribute</small></button>
+      <button id="btn-lazy-insert" class="needs-ce">⑥ 插入未知元素 lc-lazy<br><small>延迟定义前的 HTMLElement</small></button>
+      <button id="btn-lazy-define" class="needs-ce">⑦ 定义 lc-lazy 触发升级<br><small>按树序同步 upgrade</small></button>
+      <button id="btn-manual-upgrade" class="needs-ce">⑧ customElements.upgrade<br><small>手动升级（幂等）</small></button>
+      <button id="btn-dup-define" class="needs-ce">⑨ 重复定义冲突<br><small>get() 拦截 + NotSupportedError</small></button>
+      <button id="btn-shadow" class="needs-ce">⑩ 移入/移出 Shadow DOM<br><small>隔离性 + 独立 observer</small></button>
+      <button id="btn-cross-container" class="needs-ce">⑪ 跨容器迁移<br><small>同文档移动无 adopted</small></button>
+      <button id="btn-adopt" class="needs-ce">⑫ 跨文档迁移 iframe<br><small>adoptedCallback</small></button>
+      <button id="btn-downgrade" class="needs-ce">⑬ 降级为普通元素<br><small>replaceWith + 属性保留</small></button>
+      <button id="btn-clear">⟲ 清空时间线与舞台</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>演示舞台</h2>
+    <div id="stage">
+      <div id="zone-a" class="zone">容器 A</div>
+      <div id="zone-b" class="zone">容器 B</div>
+    </div>
+    <div id="shadow-host">Shadow Host（点击 ⑩ 后元素在其内部/插槽间移动）</div>
+    <div id="iframe-wrap"></div>
+  </section>
+
+  <section class="panel wide">
+    <h2>生命周期时间线 <span class="badge">事件数：<span id="event-count">0</span></span></h2>
+    <div id="lanes"></div>
+    <h3>事件日志（最新在前）</h3>
+    <ul id="event-log"></ul>
+  </section>
+
+  <section class="panel">
+    <h2>兼容性检测</h2>
+    <ul id="compat-list" class="compat"></ul>
+    <h3>已知浏览器差异</h3>
+    <ul id="diff-list" class="diffs"></ul>
+  </section>
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
