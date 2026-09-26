@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自定义元素生命周期实验室</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>Custom Elements 生命周期实验室</h1>
+  <p class="subtitle">构造 / 连接 / 断开 / 属性变化 / 采用 / 升级 — 全回调可视化</p>
+</header>
+
+<main>
+  <section id="compat-panel" class="panel">
+    <h2>浏览器兼容性检测</h2>
+    <ul id="compat-list"></ul>
+    <p id="compat-note" class="note"></p>
+  </section>
+
+  <div class="layout">
+    <div class="controls">
+      <section class="panel">
+        <h2>1. 基础生命周期</h2>
+        <button id="btn-create-counter">创建 &lt;x-counter&gt;（constructor + connected）</button>
+        <button id="btn-disconnect">断开（disconnectedCallback）</button>
+        <button id="btn-reconnect">重连（connectedCallback 再次触发）</button>
+      </section>
+
+      <section class="panel">
+        <h2>2. 属性变化与反射</h2>
+        <button id="btn-set-attr">setAttribute('value') → attributeChangedCallback</button>
+        <button id="btn-set-prop">property 赋值 → 反射到 attribute</button>
+        <button id="btn-greeter">创建 &lt;x-greeter name lang&gt;（多属性观察）</button>
+      </section>
+
+      <section class="panel">
+        <h2>3. 延迟定义与升级</h2>
+        <button id="btn-lazy">先插入未知元素，800ms 后再 define（升级）</button>
+        <button id="btn-dup">重复定义 &lt;x-counter&gt;（冲突提示）</button>
+        <button id="btn-when-defined">customElements.whenDefined 演示</button>
+      </section>
+
+      <section class="panel">
+        <h2>4. 跨文档采用（adoptedCallback）</h2>
+        <button id="btn-adopt-out">adoptNode 迁移到 iframe 文档</button>
+        <button id="btn-adopt-back">迁回主文档</button>
+      </section>
+
+      <section class="panel">
+        <h2>5. Shadow DOM 隔离</h2>
+        <button id="btn-shadow-host">创建 &lt;x-shadow-host&gt;（含影子内自定义元素）</button>
+        <button id="btn-shadow-probe">探测隔离：querySelector 无法穿透</button>
+      </section>
+
+      <section class="panel">
+        <h2>6. 降级方案</h2>
+        <button id="btn-degrade">渲染普通元素降级版（无 Custom Elements 时的回退）</button>
+      </section>
+
+      <section class="panel">
+        <h2>时间线控制</h2>
+        <label>按回调过滤：
+          <select id="filter-callback">
+            <option value="">全部</option>
+          </select>
+        </label>
+        <button id="btn-clear">清空时间线与 IndexedDB</button>
+        <label class="chk"><input type="checkbox" id="chk-mutations" checked> 记录 MutationObserver 事件</label>
+      </section>
+    </div>
+
+    <div class="stage">
+      <section class="panel">
+        <h2>演示舞台（playground）</h2>
+        <div id="playground"></div>
+        <div id="iframe-holder"></div>
+      </section>
+
+      <section class="panel">
+        <h2>生命周期时间线 <span id="remote-hint" class="badge-remote hidden">已连接其他标签页</span></h2>
+        <ol id="timeline" class="timeline"></ol>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="js/recorder.js"></script>
+<script src="js/compat.js"></script>
+<script src="js/elements.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
